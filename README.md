@@ -1,49 +1,27 @@
-# World of Warcraft Classic Quiz
+# Trivia Time
+
+En modern och färgglad quiz-app byggd med React och Vite. Testa dina kunskaper inom allt från sport och musik till historia och geografi – frågorna hämtas automatiskt från [The Trivia API](https://the-trivia-api.com/).
 
 ## Innehåll
-Detta är en enkel React-baserad frågesportapplikation som testar dina kunskaper om World of Warcraft Classic (WoW Classic). Den består av flervalsfrågor om spelet, med en timer för varje fråga. Frågesporten spårar dina poäng, och efter avslutad, visar den dina resultat.
 
-## Features
-- Flervalsfrågor om WoW Classic.
-- Timer för varje fråga.
-- Sparar dina poäng och visar resultaten i slutet av frågesporten.
-- Möjlighet att starta om frågesporten.
+- Färgglad och responsiv design
+- Frågor från flera kategorier och på medelsvår nivå
+- Tydlig timer och feedback på rätt/fel svar
+- Resultatsida med poäng och möjlighet att starta om quizet
+- Allt i en lekfull och modern layout
 
-## Teknologier Använda
+## Teknologier
+
 - React
+- Vite
 - CSS3
 - JavaScript
-- JSON
+- [The Trivia API](https://the-trivia-api.com/)
 
 ## Användning
-wowquiz.netlify.app
 
-## Installation
-
-1. Klona repositoryt:
-   ```bash
-   git clone https://github.com/yourusername/wow-classic-quiz.git
-   ```
-
-2. Navigera till projektmappen:
-   ```bash
-   cd wow-classic-quiz
-   ```
-
-3. Installera beroenden:
-   ```bash
-   npm install
-   ```
-
-4. Starta utvecklingsservern:
-   ```bash
-   npm start
-   ```
-
-5. Öppna applikationen i din webbläsare på `http://localhost:3000`.
-
-## Licens
-Detta projekt är licensierat under MIT-licensen - se den fullständiga licenstexten här: [LICENSE](LICENSE)
+Appen finns live på:  
+[wowquiz.netlify.app](https://triviatimeapp.netlify.app)
 
 
 
