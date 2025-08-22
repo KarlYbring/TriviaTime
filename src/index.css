@@ -1,8 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap');
+
+body {
+  background: url('/public/coolbackgrounds-fractalize-clear_lagoon.png') no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Fredoka', Arial, sans-serif;
+}
 body {
   margin: 0;
   padding: 0;
   height: 100vh;
-  background-image: url('/background.jpg');
   background-repeat: no-repeat; 
   background-position: center center; 
   background-size: cover; 

@@ -15,11 +15,26 @@ const Quiz = () => {
   const totalQuestions = quizData.length;
 
   useEffect(() => {
-    fetch('/data/questions.json')
+    fetch('https://the-trivia-api.com/api/questions?limit=10')
       .then((response) => response.json())
-      .then(setQuizData)
+      .then((data) => {
+        // Mappa om data till quiz-formatet som används i appen
+        const mapped = data.map(q => ({
+          question: q.question,
+          options: shuffleArray([q.correctAnswer, ...q.incorrectAnswers]),
+          answer: q.correctAnswer
+        }));
+        setQuizData(mapped);
+      })
       .catch((error) => console.error('Error fetching quiz data:', error));
   }, []);
+// Hjälpfunktion för att blanda alternativen
+function shuffleArray(array) {
+  return array
+    .map(value => ({ value, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ value }) => value);
+}
 
   useEffect(() => {
     if (isConfirmed || timeUp) return;
@@ -84,50 +99,85 @@ const Quiz = () => {
   if (quizFinished) {
     return (
       <div className="quiz-result">
-        <img src="/wow-logo.png" alt="Logo" className="top-image" />
-        <p>You scored {score} out of {totalQuestions}</p>
-        <button onClick={handleRestartQuiz}>Restart Quiz</button>
+        <div className="quiz-header">
+          <div className="quiz-icon">?</div>
+          <div className="quiz-title-bubbles">
+            <span className="bubble bubble-yellow">T</span>
+            <span className="bubble bubble-green">R</span>
+            <span className="bubble bubble-blue">I</span>
+            <span className="bubble bubble-orange">V</span>
+            <span className="bubble bubble-purple">I</span>
+            <span className="bubble bubble-red">A</span>
+          </div>
+          <div className="quiz-title-under">TIME</div>
+        </div>
+        <h2 className="quiz-result-title">Quiz Result</h2>
+        <p className="quiz-result-score">
+          You scored <span className="current-question-number">{score}</span> out of <span className="total-question-number">{totalQuestions}</span>
+        </p>
+        <button className="start-quiz-btn" onClick={handleRestartQuiz}>Restart Quiz</button>
       </div>
     );
   }
 
-  return (
-    <div className="quiz-container">
-      <h2>{currentQuestion.question}</h2>
+  // Bokstäver för alternativen
+  const optionLabels = ['A', 'B', 'C', 'D'];
 
-      <div className="options-container">
+  return (
+    <div className="quiz-container new-quiz-structure">
+      <div className="quiz-header">
+        <div className="quiz-icon">?</div>
+        <div className="quiz-title-bubbles">
+          <span className="bubble bubble-yellow">T</span>
+          <span className="bubble bubble-green">R</span>
+          <span className="bubble bubble-blue">I</span>
+          <span className="bubble bubble-orange">V</span>
+          <span className="bubble bubble-purple">I</span>
+          <span className="bubble bubble-red">A</span>
+        </div>
+        <div className="quiz-title-under">TIME</div>
+      </div>
+      <div className="quiz-status-row">
+        <div className="question-tracker">
+          Question <span className="current-question-number">{currentQuestionNumber}</span> out of <span className="total-question-number">{totalQuestions}</span>
+        </div>
+      </div>
+      <div className="question-bg">
+        <div className="question-text">{currentQuestion.question}</div>
+      </div>
+
+      <div className="options-grid">
         {currentQuestion.options?.map((option, index) => {
           const isCorrect = isConfirmed && option === currentQuestion.answer;
           const isWrong = isConfirmed && selectedOption === option && option !== currentQuestion.answer;
-
           return (
             <div
               key={index}
               onClick={() => !isConfirmed && !timeUp && handleOptionClick(option)}
-              className={`option 
-                ${selectedOption === option ? 'selected' : ''} 
-                ${isCorrect ? 'correct' : ''} 
-                ${isWrong ? 'wrong' : ''}`}>
-              {option}
+              className={`option-block ${selectedOption === option ? 'selected' : ''} ${isCorrect ? 'correct' : ''} ${isWrong ? 'wrong' : ''}`}
+            >
+              <span className="option-label">{optionLabels[index] || ''}:</span> {option}
             </div>
           );
         })}
       </div>
 
-      {!isConfirmed && !timeUp && <div className="timer">{timeLeft} seconds left</div>}
-
-      {!isConfirmed && !timeUp && (
-        <button onClick={handleConfirmAnswer} disabled={!selectedOption}>
-          Confirm Answer
-        </button>
-      )}
-
-      {(isConfirmed || timeUp) && (
-        <button onClick={handleNextQuestion}>Next Question</button>
-      )}
-
-      <div className="question-tracker">
-        Question {currentQuestionNumber} out of {totalQuestions}
+      <div className="confirm-timer-block">
+        {(!isConfirmed && !timeUp) ? (
+          <>
+            <button
+              onClick={handleConfirmAnswer}
+              disabled={!selectedOption}
+            >
+              Confirm Answer
+            </button>
+            <div className={`timer timer-below${timeLeft < 10 ? ' danger' : ''}`}>{timeLeft} seconds left</div>
+          </>
+        ) : (
+          <button onClick={handleNextQuestion}>
+            Next Question
+          </button>
+        )}
       </div>
     </div>
   );
