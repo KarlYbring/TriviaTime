@@ -21,7 +21,7 @@ En modern och färgglad quiz-app byggd med React och Vite. Testa dina kunskaper 
 ## Användning
 
 Appen finns live på:  
-[wowquiz.netlify.app](https://triviatimeapp.netlify.app)
+(https://triviatimeapp.netlify.app)
 
 
 
